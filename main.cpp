@@ -25,8 +25,9 @@ int main(int argc, char const *argv[])
     }
 
     // Power up sensor
+    std::cout << "Attempting to power up the sensors..." << std::endl;
     try {
-        std::cout << "Attempting to power up the sensors, named:" << std::endl;
+        std::cout << "Names:" << std::endl;
         for (int i = 0; i < sensor_count; ++i) {
             std::cout << sensor_names[i] << std::endl;
         }
@@ -49,6 +50,7 @@ int main(int argc, char const *argv[])
     
     // Read calibrations
     // es kann immer nur 1 mal pro Sensor die Konfiguration abgefragt werden
+    std::cout << "Fetching calibrations:" << std::endl;
     try {
         
         // auto calib_1 = std::get<0>(get_calibration(Sensor::lidar,      sensor_names[0]));
@@ -61,11 +63,10 @@ int main(int argc, char const *argv[])
         auto val_3 = std::get<1>(get_calibration(Sensor::ultrasonic, sensor_names[2]));
         auto val_4 = std::get<1>(get_calibration(Sensor::pressure,   sensor_names[3]));
         
-        std::cout << "Calibrations:\n"
-            << /*calib_1 <<*/ "\t" << val_1 << "\n" 
-            << /*calib_2 <<*/ "\t" << val_2 << "\n"
-            << /*calib_3 <<*/ "\t" << val_3 << "\n"
-            << /*calib_4 <<*/ "\t" << val_4 << "\n"
+        std::cout << /*calib_1 <<*/ "\t" << val_1 << "\n" 
+            /*<< calib_2 << "\t"*/ << val_2 << "\n"
+            /*<< calib_3 << "\t"*/ << val_3 << "\n"
+            /*<< calib_4 << "\t"*/ << val_4 << "\n"
             << std::endl;
     
     } catch (const std::runtime_error& e) {
@@ -76,6 +77,36 @@ int main(int argc, char const *argv[])
         std::cout << "Reading calibration did not work and caught exception: "
         << e.what() << std::endl;
     }
+    
+    std::cout << "Reading register data" << std::endl;
+    try {
+        std::cout << read_reg(0x1) << std::endl
+        << read_reg(0x2) << std::endl
+        << read_reg(0x3) << std::endl;
+    
+    } catch (const std::runtime_error& e) {
+        std::cout << "Reading registers did not work and caught runtime exception: "
+        << e.what() << std::endl;
+    
+    } catch (const std::exception& e) {
+        std::cout << "Reading registers did not work and caught exception: "
+        << e.what() << std::endl;
+    }
+    
+    std::cout << "Writing to register(s)..." << std::endl;
+    try {
+        const unsigned short data{11111};
+        write_reg(0x3, data);
+        std::cout << "Wrote to register: " << data << std::endl;
+    
+    } catch (const std::runtime_error& e) {
+        std::cout << "Writing to registers did not work and caught runtime exception: "
+        << e.what() << std::endl;
+    
+    } catch (const std::exception& e) {
+        std::cout << "Writing to registers did not work and caught exception: "
+        << e.what() << std::endl;
+    } 
     
     return 0;
 }
