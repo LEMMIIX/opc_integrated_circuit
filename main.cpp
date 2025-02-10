@@ -16,25 +16,43 @@ int main(int argc, char const *argv[])
 
     // ./main.exe name1 name2 name3 name4
 
-    const int sensor_count{4};
+    Sensor sensor_types[]{
+        Sensor::lidar,
+        Sensor::radar,
+        Sensor::ultrasonic,
+        Sensor::pressure,
+    };
+
+    const int sensor_count{sizeof(sensor_types)};
 
     std::string sensor_names[sensor_count];
     for (int i = 0; i < sensor_count; ++i) {
         sensor_names[i] = argv[i + 1];
     }
 
+    std::cout << "Names:" << std::endl;
+    for (int i = 0; i < sensor_count; ++i) {
+        std::cout << sensor_names[i] << std::endl;
+    }
+
     // Power up sensor
     std::cout << "Attempting to power up the sensors..." << std::endl;
     try {
-        std::cout << "Names:" << std::endl;
-        for (int i = 0; i < sensor_count; ++i) {
-            std::cout << sensor_names[i] << std::endl;
+        bool is_powered_up{false};
+        for(int i = 0; i < sensor_count; ++i) {
+            is_powered_up = false;
+            while(!is_powered_up) {
+                is_powered_up = (power_up_sensor(sensor_types[i], sensor_names[i]) == Status::success);
+            }
+            
+            std::cout << "Powered up sensor:\t" << sensor_names[i];
         }
-        
-        power_up_sensor(Sensor::lidar,      sensor_names[0]);
-        power_up_sensor(Sensor::radar,      sensor_names[1]);
-        power_up_sensor(Sensor::ultrasonic, sensor_names[2]);
-        power_up_sensor(Sensor::pressure,   sensor_names[3]);
+
+
+        // power_up_sensor(Sensor::lidar,      sensor_names[0]);
+        // power_up_sensor(Sensor::radar,      sensor_names[1]);
+        // power_up_sensor(Sensor::ultrasonic, sensor_names[2]);
+        // power_up_sensor(Sensor::pressure,   sensor_names[3]);
         
         std::cout << "Successfully powered up the sensors" << std::endl;
         
