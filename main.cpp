@@ -1,9 +1,16 @@
+/**
+ * @file main.cpp
+ * @author Lennart C. Moeller (lennartc.moeller@gmail.com)
+ * @brief The `main` method handles multiple sensor actions to control the fantasy integrated circuit.  
+ */
+
 #include <stdexcept>
 #include <iostream>
 #include <ctime>
 #include <utility>
 
 #include "opcpp_ic.h"
+
 
 /// @brief Starting the program simulates a start of the circuit which means this bool MUST be set as TRUE
 const bool& system_is_powered_up{true};
@@ -248,3 +255,19 @@ int main(int argc, char const *argv[])
     
     return 0;
 }
+
+
+
+/**
+ * 
+ *      ____    
+ *     |".."  \  ,--~ .
+ *      ` /`o- '--._  u `
+ *     __ (_/'__>  >`\   `
+ *    /cc     c '    /  u|
+ *   | 	c  _c______ /   '
+ *    \      >  >  /  \__\
+ *     `\ .______/
+ * 
+ * 
+*/
