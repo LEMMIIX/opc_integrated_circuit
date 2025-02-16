@@ -1,6 +1,6 @@
 /**
  * @file opcpp_ic.h
- * @author Pedro Novo (pedro.novo@w.hs.de)
+ * @author Pedro Novo (pedro.novo@w-hs.de)
  * @brief The `opcpp_ic` header offers a series of fantasy functionalities intended for training classes.
         It simulates an integrated circuit (IC) which requires an external boolean `system_is_powered_up`.
         THIS API WAS GIVEN AS A STARTING POINT

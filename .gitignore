@@ -1,1 +1,5 @@
 *.txt
+*.exe
+.vscode
+*.o
+!opcpp_ic.o
